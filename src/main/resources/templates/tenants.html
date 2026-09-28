@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RentEasy - Tenants</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #172554;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+        }
+
+        .header p {
+            margin-top: 6px;
+            color: #cbd5e1;
+        }
+
+        .container {
+            padding: 35px 40px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top-bar h2 {
+            font-size: 24px;
+        }
+
+        .back-button {
+            background: #172554;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-container h3 {
+            color: #172554;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #475569;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .submit-button {
+            margin-top: 20px;
+            background: #172554;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .submit-button:hover {
+            background: #1e3a8a;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+        }
+
+        .active {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .inactive {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 25px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <h1>RentEasy</h1>
+
+    <p>
+        PG & Hostel Rent Management System
+    </p>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="top-bar">
+
+        <h2>Tenant Management</h2>
+
+        <a href="/dashboard"
+           class="back-button">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- REGISTER TENANT -->
+
+    <div class="form-container">
+
+        <h3>Register New Tenant</h3>
+
+
+        <form id="tenantForm">
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Tenant Name
+                    </label>
+
+                    <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter tenant name"
+                            required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <input
+                            type="text"
+                            id="phone"
+                            placeholder="Enter phone number"
+                            required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="moveInDate">
+                        Move In Date
+                    </label>
+
+                    <input
+                            type="date"
+                            id="moveInDate"
+                            required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="roomId">
+                        Available Room
+                    </label>
+
+                    <select
+                            id="roomId"
+                            required>
+
+                        <option value="">
+                            Loading rooms...
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                    type="submit"
+                    class="submit-button">
+
+                Register Tenant
+
+            </button>
+
+
+            <div
+                    id="message"
+                    class="message">
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- TENANT LIST -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Name</th>
+
+                <th>Phone</th>
+
+                <th>Room</th>
+
+                <th>Move In Date</th>
+
+                <th>Status</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody id="tenantTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+
+    // ------------------------------
+    // LOAD AVAILABLE ROOMS
+    // ------------------------------
+
+    async function loadRooms() {
+
+        const roomSelect =
+            document.getElementById("roomId");
+
+        try {
+
+            const response =
+                await fetch("/api/rooms");
+
+            const rooms =
+                await response.json();
+
+
+            roomSelect.innerHTML =
+                '<option value="">Select Available Room</option>';
+
+
+            rooms
+                .filter(room => !room.occupied)
+                .forEach(room => {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        room.roomId;
+
+                    option.textContent =
+                        room.roomNumber +
+                        " - ₹" +
+                        room.monthlyRent;
+
+                    roomSelect.appendChild(option);
+
+                });
+
+
+            if (
+                rooms.filter(room => !room.occupied).length === 0
+            ) {
+
+                roomSelect.innerHTML =
+                    '<option value="">No available rooms</option>';
+
+            }
+
+        } catch (error) {
+
+            roomSelect.innerHTML =
+                '<option value="">Unable to load rooms</option>';
+
+        }
+
+    }
+
+
+    // ------------------------------
+    // LOAD TENANTS
+    // ------------------------------
+
+    async function loadTenants() {
+
+        const tableBody =
+            document.getElementById("tenantTableBody");
+
+        try {
+
+            const response =
+                await fetch("/api/tenants");
+
+            const tenants =
+                await response.json();
+
+
+            tableBody.innerHTML = "";
+
+
+            tenants.forEach(tenant => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>${tenant.tenantId}</td>
+
+                    <td>${tenant.name}</td>
+
+                    <td>${tenant.phone}</td>
+
+                    <td>
+                        ${
+                            tenant.room
+                                ? tenant.room.roomNumber
+                                : "-"
+                        }
+                    </td>
+
+                    <td>${tenant.moveInDate}</td>
+
+                    <td class="${
+                        tenant.active
+                            ? "active"
+                            : "inactive"
+                    }">
+
+                        ${
+                            tenant.active
+                                ? "Active"
+                                : "Inactive"
+                        }
+
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(row);
+
+            });
+
+
+        } catch (error) {
+
+            tableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        style="text-align:center;">
+
+                        Unable to load tenants.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+    }
+
+
+    // ------------------------------
+    // REGISTER TENANT
+    // ------------------------------
+
+    document
+        .getElementById("tenantForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const name =
+                    document
+                        .getElementById("name")
+                        .value;
+
+
+                const phone =
+                    document
+                        .getElementById("phone")
+                        .value;
+
+
+                const moveInDate =
+                    document
+                        .getElementById("moveInDate")
+                        .value;
+
+
+                const roomId =
+                    document
+                        .getElementById("roomId")
+                        .value;
+
+
+                const message =
+                    document
+                        .getElementById("message");
+
+
+                if (!roomId) {
+
+                    message.style.color = "red";
+
+                    message.innerText =
+                        "Please select a room.";
+
+                    return;
+
+                }
+
+
+                const tenant = {
+
+                    name: name,
+
+                    phone: phone,
+
+                    moveInDate: moveInDate,
+
+                    active: true
+
+                };
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/tenants/register/"
+                            + roomId,
+                            {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify(tenant)
+
+                            }
+                        );
+
+
+                    if (response.ok) {
+
+                        message.style.color =
+                            "green";
+
+                        message.innerText =
+                            "Tenant registered successfully!";
+
+
+                        document
+                            .getElementById("tenantForm")
+                            .reset();
+
+
+                        await loadTenants();
+
+                        await loadRooms();
+
+
+                    } else {
+
+                        let errorMessage =
+                            "Failed to register tenant.";
+
+
+                        try {
+
+                            const error =
+                                await response.json();
+
+                            if (error.message) {
+
+                                errorMessage =
+                                    error.message;
+
+                            }
+
+                        } catch (e) {
+                            // Ignore JSON parsing error
+                        }
+
+
+                        message.style.color =
+                            "red";
+
+                        message.innerText =
+                            errorMessage;
+
+                    }
+
+
+                } catch (error) {
+
+                    message.style.color =
+                        "red";
+
+                    message.innerText =
+                        "Server connection error.";
+
+                }
+
+            }
+        );
+
+
+    // ------------------------------
+    // INITIAL LOAD
+    // ------------------------------
+
+    loadRooms();
+
+    loadTenants();
+
+
+</script>
+
+
+</body>
+
+</html>
